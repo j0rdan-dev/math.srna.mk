@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="44 44 92 120" role="img" aria-label="Срна">
+  <path d="M48 122 Q52 72 74 58 L76 138 Q56 138 48 122" fill="#d9b063"/>
+  <path d="M132 122 Q128 72 106 58 L104 138 Q124 138 132 122" fill="#d9b063"/>
+  <circle cx="90" cy="94" r="33" fill="#fae6d2"/>
+  <path d="M58 84 Q60 50 90 46 Q120 50 122 84 Q114 68 90 68 Q66 68 58 84" fill="#ebc674"/>
+  <path d="M62 60 Q88 39 118 58" fill="none" stroke="#d3a651" stroke-width="8" stroke-linecap="round"/>
+
+  <ellipse cx="74" cy="92" rx="5.5" ry="6.5" fill="#c69b68"/>
+  <ellipse cx="106" cy="92" rx="5.5" ry="6.5" fill="#c69b68"/>
+  <circle cx="72" cy="89" r="2" fill="#fff"/>
+  <circle cx="104" cy="89" r="2" fill="#fff"/>
+
+  <circle cx="55" cy="101" r="2.1" fill="#f7c4d9"/>
+  <circle cx="53" cy="101" r="1.1" fill="#f48ab7"/>
+  <circle cx="57" cy="101" r="1.1" fill="#f48ab7"/>
+  <circle cx="55" cy="99" r="1.1" fill="#f48ab7"/>
+  <circle cx="55" cy="103" r="1.1" fill="#f48ab7"/>
+  <circle cx="55" cy="101" r="0.55" fill="#ffd866"/>
+
+  <circle cx="125" cy="101" r="2.1" fill="#f7c4d9"/>
+  <circle cx="123" cy="101" r="1.1" fill="#f48ab7"/>
+  <circle cx="127" cy="101" r="1.1" fill="#f48ab7"/>
+  <circle cx="125" cy="99" r="1.1" fill="#f48ab7"/>
+  <circle cx="125" cy="103" r="1.1" fill="#f48ab7"/>
+  <circle cx="125" cy="101" r="0.55" fill="#ffd866"/>
+
+  <circle cx="80" cy="101" r="0.9" fill="#d7ab89"/>
+  <circle cx="84" cy="103" r="0.8" fill="#d7ab89"/>
+  <circle cx="86" cy="99" r="0.75" fill="#d7ab89"/>
+  <circle cx="94" cy="100" r="0.85" fill="#d7ab89"/>
+  <circle cx="97" cy="103" r="0.8" fill="#d7ab89"/>
+  <circle cx="100" cy="101" r="0.75" fill="#d7ab89"/>
+
+  <path d="M76 111 Q90 122 104 111" fill="none" stroke="#93553a" stroke-width="4.5" stroke-linecap="round"/>
+  <circle cx="63" cy="99" r="6" fill="#e8a0a3" opacity="0.72"/>
+  <circle cx="117" cy="99" r="6" fill="#e8a0a3" opacity="0.72"/>
+
+  <rect x="60" y="128" width="60" height="32" rx="14" fill="#7f7cf5"/>
+  <path d="M60 133 Q52 140 54 150 Q55 156 61 158 Q66 158 67 153 L66 142 Q65 136 60 133" fill="#fae6d2"/>
+  <path d="M120 133 Q128 140 126 150 Q125 156 119 158 Q114 158 113 153 L114 142 Q115 136 120 133" fill="#fae6d2"/>
+  <rect x="53" y="146" width="12" height="3.5" rx="1.75" fill="#f6c457"/>
+  <rect x="115" y="146" width="12" height="3.5" rx="1.75" fill="#58c8c2"/>
+  <circle cx="90" cy="145" r="3" fill="#f4f3ff"/>
+</svg>
