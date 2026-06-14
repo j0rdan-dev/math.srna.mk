@@ -1016,7 +1016,35 @@
                 });
             }
 
-            function applyFilter(selectedGrade) {
+            function updateUrlParam(selectedGrade, replace = true) {
+                try {
+                    const url = new URL(window.location.href);
+                    const params = url.searchParams;
+
+                    if (selectedGrade && selectedGrade !== "all") {
+                        params.set("grade", selectedGrade);
+                    } else {
+                        params.delete("grade");
+                    }
+
+                    // build new href preserving path and hash
+                    const newSearch = params.toString();
+                    const newHref = url.pathname + (newSearch ? "?" + newSearch : "") + url.hash;
+
+                    if (replace) {
+                        window.history.replaceState(null, "", newHref);
+                    } else {
+                        window.history.pushState(null, "", newHref);
+                    }
+                } catch (e) {
+                    // fallback for very old environments
+                    const q = (selectedGrade && selectedGrade !== "all") ? "?grade=" + encodeURIComponent(selectedGrade) : "";
+                    if (replace) window.history.replaceState(null, "", location.pathname + q + location.hash);
+                    else window.history.pushState(null, "", location.pathname + q + location.hash);
+                }
+            }
+
+            function applyFilter(selectedGrade, updateHistory = true) {
                 cards.forEach((card) => {
                     const listItem = card.closest("li");
                     const grades = (card.dataset.grades || "")
@@ -1036,15 +1064,31 @@
                 });
 
                 setActiveButton(selectedGrade);
+
+                if (updateHistory) {
+                    updateUrlParam(selectedGrade, true);
+                }
             }
 
             filterButtons.forEach((button) => {
                 button.addEventListener("click", () => {
-                    applyFilter(button.dataset.gradeFilter || "all");
+                    applyFilter(button.dataset.gradeFilter || "all", true);
                 });
             });
 
-            applyFilter("all");
+            // On load: read query param and apply if valid
+            const params = new URLSearchParams(window.location.search);
+            const gradeFromUrl = params.get("grade");
+            const isValid = Array.from(filterButtons).some(b => b.dataset.gradeFilter === gradeFromUrl);
+            const initialGrade = isValid ? gradeFromUrl : "all";
+            applyFilter(initialGrade, false);
+
+            // Handle back/forward navigation
+            window.addEventListener("popstate", () => {
+                const p = new URLSearchParams(window.location.search).get("grade");
+                const valid = Array.from(filterButtons).some(b => b.dataset.gradeFilter === p);
+                applyFilter(valid ? p : "all", false);
+            });
         })();
     </script>
 </body>
