@@ -19,9 +19,10 @@ function nextQuestion() {
     if (mode === 0) {
         generateFractionToFractionQuestion();
     } else if (mode === 1) {
-        generateFractionToDecimalQuestion();
-    } else {
         generateComparisonQuestion();
+        //generateFractionToDecimalQuestion();
+    } else {
+        generateFractionToFractionQuestion();
     }
 
     getQNo();
