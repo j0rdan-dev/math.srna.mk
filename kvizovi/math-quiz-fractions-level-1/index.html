@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="mk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Математички квиз со дропки: визуелни дропки, децимали и споредба на дропки.">
+    <link rel="stylesheet" href="../shared/style.css">
+    <script src="../shared/shared-script.js" defer></script>
+    <script src="script.js" defer></script>
+    <title>Srna.mk квиз со дропки</title>
+    <link rel="icon" type="image/png" href="../../files/favicon.png">
+    <style>
+        .question-card {
+            padding: 0.9rem;
+            --cell-fill-start: #74b9ff;
+            --cell-fill-end: #4f7cf7;
+            --cell-fill-border: #4b6fdb;
+            --pie-fill: #4f7cf7;
+            --pie-rest: #edf3ff;
+        }
+
+        #question {
+            font-size: 0.84rem;
+            line-height: 1.3;
+        }
+
+        .fq-title {
+            font-weight: 800;
+            margin-bottom: 0.55rem;
+            color: #2f467d;
+        }
+
+        .decimal-prompt {
+            font-size: 0.5em;
+            line-height: 1.2;
+        }
+
+        .tiny-prompt {
+            font-size: 0.5em;
+            line-height: 1.2;
+        }
+
+        .fraction-wrap {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 0.2rem;
+        }
+
+        .fraction-wrap.compare-layout {
+            display: grid;
+            grid-template-columns: minmax(84px, 1fr) auto minmax(84px, 1fr);
+            align-items: center;
+            gap: 0.45rem;
+            width: 100%;
+        }
+
+        .fraction-wrap.compare-layout .fraction-block {
+            min-width: 0;
+            max-width: none;
+            width: 100%;
+        }
+
+        .fraction-block {
+            position: relative;
+            min-width: 220px;
+            max-width: 220px;
+            padding: 0.55rem;
+            border-radius: 12px;
+            border: 2px solid #d8e6fb;
+            background: #ffffff;
+        }
+
+        .fraction-denominator {
+            position: absolute;
+            right: 6px;
+            bottom: 6px;
+            font-size: 0.62rem;
+            font-weight: 700;
+            line-height: 1;
+            color: #3e5a94;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #c6d7f6;
+            border-radius: 8px;
+            padding: 2px 5px;
+        }
+
+        .fraction-label {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #45609b;
+            margin-bottom: 0.35rem;
+        }
+
+        .fraction-grid {
+            display: grid;
+            gap: 1px;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid #97b0de;
+            background: #dfe9ff;
+        }
+
+        .fraction-cell {
+            background: #eef4ff;
+            border: 1px solid #c6d7f6;
+        }
+
+        .fraction-cell.filled {
+            background: linear-gradient(180deg, var(--cell-fill-start) 0%, var(--cell-fill-end) 100%);
+            border-color: var(--cell-fill-border);
+        }
+
+        .fraction-pie {
+            --parts: 8;
+            --fill: 180deg;
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border-radius: 50%;
+            border: 1px solid #5d7fbe;
+            background:
+                repeating-conic-gradient(from -90deg,
+                    rgba(48, 68, 116, 0.75) 0 2.6deg,
+                    transparent 2.6deg calc(360deg / var(--parts))),
+                conic-gradient(from -90deg,
+                    var(--pie-fill) 0deg var(--fill),
+                    var(--pie-rest) var(--fill) 360deg);
+            box-shadow: inset 0 0 0 2px #5f7db8;
+        }
+
+        .question-card.mode-fraction {
+            --cell-fill-start: #ff97d8;
+            --cell-fill-end: #d667ca;
+            --cell-fill-border: #b955b0;
+            --pie-fill: #d667ca;
+            --pie-rest: #ffeffb;
+            border-color: #f6c9ee;
+            background: linear-gradient(180deg, #fffaff 0%, #fff0fc 100%);
+        }
+
+        .question-card.mode-fraction .fq-title {
+            color: #9d2f88;
+        }
+
+        .question-card.mode-decimal {
+            --cell-fill-start: #73e6b1;
+            --cell-fill-end: #31b985;
+            --cell-fill-border: #2fa477;
+            --pie-fill: #31b985;
+            --pie-rest: #e9fff3;
+            border-color: #b8f0d3;
+            background: linear-gradient(180deg, #f9fffb 0%, #ebfff2 100%);
+        }
+
+        .question-card.mode-decimal .fq-title {
+            color: #1a8f63;
+        }
+
+        .question-card.mode-compare {
+            --cell-fill-start: #9ed5ff;
+            --cell-fill-end: #4ea0e8;
+            --cell-fill-border: #3d8bcf;
+            --pie-fill: #4ea0e8;
+            --pie-rest: #eaf6ff;
+            border-color: #bfe0ff;
+            background: linear-gradient(180deg, #f9fdff 0%, #eef8ff 100%);
+        }
+
+        .question-card.mode-compare .fq-title,
+        .question-card.mode-compare .compare-hint {
+            color: #2866a2;
+        }
+
+        .comparison-sign-box {
+            width: 46px;
+            height: 46px;
+            border-radius: 10px;
+            border: 2px dashed #6da3d8;
+            background: #eef7ff;
+            color: #2f6ea9;
+            font-size: 1.5rem;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+
+        .fraction-pie::after {
+            content: "";
+            position: absolute;
+            inset: 8%;
+            border-radius: 50%;
+            border: 1px solid rgba(90, 119, 176, 0.65);
+        }
+
+        .compare-hint {
+            margin-top: 0.55rem;
+            font-weight: 700;
+            color: #3f5a8f;
+        }
+
+        @media (max-width: 640px) {
+            #question {
+                font-size: 0.76rem;
+            }
+
+            .fraction-block {
+                min-width: 120px;
+                max-width: 218px;
+                padding: 0.4rem;
+            }
+
+            .fraction-wrap.compare-layout {
+                grid-template-columns: minmax(74px, 1fr) auto minmax(74px, 1fr);
+                gap: 0.25rem;
+            }
+
+            .comparison-sign-box {
+                width: 32px;
+                height: 32px;
+                font-size: 1rem;
+            }
+
+            .fraction-denominator {
+                right: 4px;
+                bottom: 4px;
+                font-size: 0.52rem;
+                padding: 2px 4px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <audio id="audio-success" src="../shared/success.mp3"></audio>
+    <audio id="audio-fail" src="../shared/fail.mp3"></audio>
+    <audio id="audio-yay" src="../shared/yay.mp3"></audio>
+
+    <div class="container">
+        <div id="start-game">
+            <h1>Добредојдовте на квизот со дропки на Срна.</h1>
+            <p>Ќе добиете 10 прашања со визуелни дропки, децимали и споредба на две дропки.</p>
+            <a id="start-btn" onclick="restart()">▶ Ајде да решаваме</a>
+            <p>Одете на <a href="https://srna.mk">почетната страна</a>
+                или одберете некој од <a href="https://srna.mk/testovi.html">забавните тестови</a>.</p>
+        </div>
+
+        <div id="in-game">
+            <div class="top-section">
+                <h1>Дропки и децимални броеви</h1>
+                <div class="game-data">
+                    <p>Прашање: <span id="Qno">0</span>/10</p>
+                    <p>Резултат: <span id="score">0</span></p>
+                </div>
+                <div id="timer">
+                    <div id="progress"></div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <h1 id="question">Прашање...</h1>
+            </div>
+
+            <h3>Одберете го точниот одговор:</h3>
+            <div class="answer-card">
+                <button>Опција A</button>
+                <button>Опција B</button>
+                <button>Опција C</button>
+                <button>Опција D</button>
+            </div>
+        </div>
+
+        <div id="end-game">
+            <h1>Квиз со дропки</h1>
+            <span>Број на точни одговори:</span>
+            <h2><div><span id="correct-answers"></span><span id="result-dot-1" class="dot"></span></div></h2>
+            <span>Резултат (точни одговори + време):</span>
+            <h2><span id="final-score">0</span> / 1000<span id="result-dot-2" class="dot"></span></h2>
+            <p id="message"></p>
+            <a id="restart-btn" onclick="restart()">Играј повторно</a>
+            <p>Или одберете некој од другите <a href="https://srna.mk/testovi.html">забавни тестови</a>.</p>
+        </div>
+    </div>
+</body>
+
+</html>
